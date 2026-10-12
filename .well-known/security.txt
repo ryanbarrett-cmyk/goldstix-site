@@ -1,0 +1,4 @@
+Contact: mailto:ryan@goldstix.com
+Expires: 2027-10-12T00:00:00Z
+Policy: https://goldstix.com/security
+Preferred-Languages: en

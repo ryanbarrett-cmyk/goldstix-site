@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pay with Goldstix</title>
+<meta name="theme-color" content="#0B0B0F">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Pay with Goldstix">
+<meta property="og:description" content="Open this link on your phone to pay in Goldstix.">
+<meta property="og:image" content="https://goldstix.com/assets/img/og.png">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/Goldstix-Symbol.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="/" aria-label="Goldstix home"><img src="/assets/img/logo-dark-600.png" alt="Goldstix" width="600" height="177"></a>
+    <span class="pill"><span class="dot"></span>Private beta</span>
+  </header>
+
+  <!-- Mirrors PayConfirmScreen. Served at goldstix.com/pay?to=..&tag=..[&amt=..&memo=..&n=..&exp=..].
+       When the Goldstix app is installed, iOS/Android open the app on this URL (universal link /
+       App Link) and this page never shows. It appears only in a browser without the app. -->
+  <main class="paybox">
+    <div class="avatar"><span class="g">&#xF3E8;</span></div>
+    <div class="to" id="to">Pay with Goldstix</div>
+    <div class="tag" id="tag" hidden></div>
+    <div class="amount" id="amount" hidden></div>
+    <div class="memo" id="memo" hidden></div>
+
+    <a class="btn" id="open" href="/">Open in Goldstix</a>
+
+    <div class="note" id="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+      <span id="noteText">Open this link on the phone where you use Goldstix. The app checks who you're paying against the Goldstix ledger and asks for Face ID before anything is sent.</span>
+    </div>
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/></svg>
+      <span>Goldstix is in private testing. If you don't have the app yet, ask the person who sent you this link for an invite.</span>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <address>Goldstix Clearing, LLC · Canadian, Texas</address>
+      <nav><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/security">Security</a></nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var G = '';
+  var q = window.location.search || '';
+  var p = new URLSearchParams(q);
+  var to = p.get('to');
+  var tag = (p.get('tag') || '').replace(/^\$/, '');
+  var amt = parseFloat(p.get('amt'));
+  var memo = p.get('memo');
+  var exp = parseInt(p.get('exp'), 10);
+
+  function sym() { var s = document.createElement('span'); s.className = 'g'; s.textContent = G; return s; }
+  function show(id) { var el = document.getElementById(id); el.hidden = false; return el; }
+
+  if (tag) {
+    document.getElementById('to').textContent = 'Pay';
+    var t = show('tag'); t.appendChild(sym()); t.appendChild(document.createTextNode(tag));
+  }
+  if (amt > 0) {
+    var a = show('amount'); a.appendChild(sym());
+    a.appendChild(document.createTextNode(amt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })));
+  }
+  if (memo) show('memo').textContent = memo.slice(0, 100);
+
+  var open = document.getElementById('open');
+  if (!to) {
+    document.getElementById('to').textContent = 'This payment link is incomplete.';
+    document.getElementById('to').className = 'to err';
+    open.hidden = true;
+    return;
+  }
+  if (exp && Date.now() > exp * 1000) {
+    document.getElementById('noteText').textContent = 'This payment code has expired. Ask for a fresh one.';
+    document.getElementById('noteText').className = 'err';
+    open.hidden = true;
+    return;
+  }
+
+  // Hand off to the app's custom scheme (same query). Only auto-try on phones;
+  // a desktop browser would just show an error for an unknown scheme.
+  var deep = 'goldstix://pay' + q;
+  open.setAttribute('href', deep);
+  if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
+    setTimeout(function () { window.location.href = deep; }, 400);
+  }
+})();
+</script>
+</body>
+</html>

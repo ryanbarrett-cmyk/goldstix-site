@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["T83S28XUNY.com.goldstix.app"],
+        "components": [
+          { "/": "/pay", "comment": "Goldstix payment intents (NFC stickers, shared links)" },
+          { "/": "/pay/*" }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["T83S28XUNY.com.goldstix.app"]
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Security — Goldstix</title>
+<meta name="description" content="How Goldstix protects payments, and how to report a vulnerability.">
+<meta name="theme-color" content="#0B0B0F">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="/" aria-label="Goldstix home"><img src="/assets/img/logo-dark-600.png" alt="Goldstix" width="600" height="177"></a>
+    <span class="pill"><span class="dot"></span>Private beta</span>
+  </header>
+
+  <main class="doc">
+    <h1>Security <span class="draft">DRAFT</span></h1>
+    <p class="meta">Effective October 12, 2026 · Pending review by Goldstix Clearing compliance and counsel</p>
+
+    <h2>How Goldstix protects payments</h2>
+    <ul>
+      <li><strong>You approve every payment.</strong> Each payment needs Face ID, Touch ID or your device passcode on your own phone.</li>
+      <li><strong>Codes can't redirect your money.</strong> A QR code, NFC tag or link only says who to pay. The app looks the recipient up on the Goldstix ledger and shows their name and goldtag before you approve.</li>
+      <li><strong>Encrypted in transit.</strong> All traffic between the app and the ledger uses TLS.</li>
+    </ul>
+
+    <h2>Reporting a vulnerability</h2>
+    <p>If you believe you've found a security problem in the Goldstix app, this website or the Goldstix ledger, email <a href="mailto:ryan@goldstix.com?subject=Security%20report">ryan@goldstix.com</a> with "Security report" in the subject. Include the steps to reproduce it and the impact you observed.</p>
+    <ul>
+      <li>We will acknowledge your report within 3 business days.</li>
+      <li>Please give us reasonable time to fix the problem before disclosing it publicly.</li>
+      <li>Test only with accounts you own. Don't access, change or delete other people's data, and don't degrade the service.</li>
+      <li>We will not pursue legal action over good-faith research that follows this policy.</li>
+    </ul>
+    <p>Machine-readable contact: <a href="/.well-known/security.txt">/.well-known/security.txt</a></p>
+
+    <h2>Contact</h2>
+    <p>Goldstix Clearing, LLC · 124 Main Street, Suite 200, Canadian, Texas 79014 · (806) 323-8000</p>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <address>Goldstix Clearing, LLC · Canadian, Texas</address>
+      <nav><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/security">Security</a></nav>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
