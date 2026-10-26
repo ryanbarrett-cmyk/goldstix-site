@@ -14,12 +14,50 @@
   <header class="top">
     <a class="logo" href="/" aria-label="Goldstix home"><img src="/assets/img/logo-dark-600.png" alt="Goldstix" width="600" height="177"></a>
   </header>
-  <main class="paybox">
+  <main class="paybox" id="notfound">
     <div class="avatar"><span class="g">&#xF3E8;</span></div>
     <h1 style="font-size:28px;letter-spacing:-0.02em;margin:0 0 8px">Nothing here</h1>
     <p style="color:var(--text-2)">That page doesn't exist.</p>
     <a class="btn" href="/">Go to goldstix.com</a>
   </main>
+
+  <!-- Goldstix Checkout: a store register's QR code is goldstix.com/c/chk_<22 base62>.
+       GitHub Pages can't route /c/<id> to a page, so this 404 page recognizes it.
+       With the app installed, iOS/Android open the app on this URL (universal link /
+       App Link) and this never shows. It shows no amount or store and calls no API:
+       the checkout lives only on the Goldstix server, behind sign-in, so a copy of
+       this page can't show anyone's sale. (goldstix-app docs/checkout/CHECKOUT_QR_SPEC.md §3.3) -->
+  <main class="paybox" id="checkout" hidden>
+    <div class="avatar"><span class="g">&#xF3E8;</span></div>
+    <h1 style="font-size:28px;letter-spacing:-0.02em;margin:0 0 8px">Pay at the register with Goldstix</h1>
+    <p style="color:var(--text-2)">Open this code in the Goldstix app. The app shows the store and the amount from the Goldstix ledger and asks for Face ID before anything is paid.</p>
+    <a class="btn" id="open" href="/">Open in Goldstix</a>
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/></svg>
+      <span>Only pay a code shown on the store's own register while you're there. Register codes expire after a few minutes.</span>
+    </div>
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+      <span>Goldstix is in private testing. If you don't have the app, pay the store another way.</span>
+    </div>
+  </main>
 </div>
+
+<script>
+(function () {
+  var m = /^\/c\/(chk_[0-9A-Za-z]{22})\/?$/.exec(window.location.pathname);
+  if (!m) return;
+  document.title = 'Pay with Goldstix';
+  document.getElementById('notfound').hidden = true;
+  document.getElementById('checkout').hidden = false;
+  // Hand off to the app's custom scheme. Only auto-try on phones; a desktop
+  // browser would just show an error for an unknown scheme.
+  var deep = 'goldstix://c/' + m[1];
+  document.getElementById('open').setAttribute('href', deep);
+  if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
+    setTimeout(function () { window.location.href = deep; }, 300);
+  }
+})();
+</script>
 </body>
 </html>

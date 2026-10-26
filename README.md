@@ -9,6 +9,7 @@ subset of Goldstix Sans Bold.
 |---|---|
 | `/` | Home |
 | `/pay` | Browser fallback for payment links (`goldstix.com/pay?to=..&tag=..`). With the app installed, iOS/Android open the app instead. |
+| `/c/chk_…` | Goldstix Checkout register codes. Handled by `404.html` (Pages can't route `/c/<id>`): "Open in Goldstix" (`goldstix://c/<id>`), no amount, no store, no API call. With the app installed, iOS/Android open the app instead. |
 | `/privacy`, `/security` | Policies (DRAFT pending compliance/counsel review) |
 | `/.well-known/apple-app-site-association` | Universal links for `T83S28XUNY.com.goldstix.app` |
 | `/.well-known/security.txt` | Vulnerability contact |
