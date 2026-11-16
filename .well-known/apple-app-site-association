@@ -6,7 +6,8 @@
         "appIDs": ["T83S28XUNY.com.goldstix.app"],
         "components": [
           { "/": "/pay", "comment": "Goldstix payment intents (NFC stickers, shared links)" },
-          { "/": "/pay/*" }
+          { "/": "/pay/*" },
+          { "/": "/c/*", "comment": "Goldstix Checkout (register QR codes)" }
         ]
       }
     ]
